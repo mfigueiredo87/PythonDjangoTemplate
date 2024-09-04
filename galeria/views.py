@@ -4,9 +4,7 @@ from galeria.models import Fotografia
 
 def index(request):
     # estruturas de dados ou dicionario
-    fotografias = Fotografia.objects.all()
-   
-
+    fotografias = Fotografia.objects.order_by("-data_fotografia").filter(publicado=True)
     return render(request, 'galeria/index.html', {"cards": fotografias})
 
 def imagem(request, foto_id):
