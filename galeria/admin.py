@@ -9,4 +9,8 @@ class ListandoFotografias(admin.ModelAdmin):
     list_display_links = ("id","nome")
     # adicionando o campo de busca
     search_fields = ("nome",)
+    # criar filtros por categorias
+    list_filter = ("categoria",)
+    # paginacao
+    list_per_page = 10
 admin.site.register(Fotografia, ListandoFotografias)
