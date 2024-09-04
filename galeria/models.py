@@ -3,8 +3,16 @@ from django.db import models
 # Create your models here.
 # criar as classes para o banco de dados/tabelas no banco
 class Fotografia(models.Model):
+    # especificar as opcoes de categorias
+    OPCOES_CATEGORIA = [
+        ("NEBULOSA", "Nebulosa"),
+        ("ESTRELA", "Estrela"),
+        ("GALAXIA", "Galaxia"),
+        ("PLANETA", "Planeta")
+    ]
     nome = models.CharField(max_length=100, null=False, blank=False)
     legenda = models.CharField(max_length=150, null=False, blank=False)
+    categoria = models.CharField(max_length=50, choices=OPCOES_CATEGORIA, default='')
     descricao = models.TextField(null=False, blank=False)
     foto = models.CharField(max_length=100, null=False, blank=False)
     
