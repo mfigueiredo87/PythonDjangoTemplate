@@ -10,7 +10,7 @@ class ListandoFotografias(admin.ModelAdmin):
     # adicionando o campo de busca
     search_fields = ("nome",)
     # criar filtros por categorias
-    list_filter = ("categoria",)
+    list_filter = ("categoria","usuario",)
     # para mostrar o checkbox para publicacao
     list_editable = ("publicado",)
     # paginacao
