@@ -1,11 +1,36 @@
 from django.shortcuts import render, redirect
 from usuarios.forms import LoginForms, CadastroForms
 from django.contrib.auth.models import User
+from django.contrib import auth
 
 # Create your views here.
 def login(request):
+    # Cria uma instância do formulário
     form = LoginForms()
-    return render(request, "usuarios/login.html", {"form":form})
+    
+    if request.method == 'POST':
+        form = LoginForms(request.POST)
+        
+        if form.is_valid():
+            # Usa cleaned_data para obter os valores de forma segura
+            nome = form.cleaned_data['nome_login']
+            senha = form.cleaned_data['senha']
+            
+            usuario = auth.authenticate(
+                request, 
+                username=nome,
+                password=senha
+            )
+            
+            if usuario is not None:
+                auth.login(request, usuario)
+                return redirect('index')
+            else:
+                # Adiciona uma mensagem de erro ao formulário se a autenticação falhar
+                form.add_error(None, "Nome de usuário ou senha inválidos.")
+    
+    # Renderiza o formulário com erros (se houver) ou em seu estado inicial
+    return render(request, "usuarios/login.html", {"form": form})
 
 def cadastro(request):
     if request.method == 'POST':
