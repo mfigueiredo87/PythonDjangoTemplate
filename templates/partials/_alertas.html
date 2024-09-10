@@ -1,0 +1,9 @@
+  <!-- verificar se tem msg -->
+   {% if messages %}
+     <!-- inserindo as msgs -->
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            <p id="message" style="color: white;">{{ message }}</p>
+        </div>
+        {% endfor %}
+   {% endif%}
