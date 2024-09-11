@@ -59,9 +59,10 @@ def editar_imagem(request, foto_id):
     # capturar as informacos do banco
     fotografia = Fotografia.objects.get(id=foto_id)
     form = FotografiaForms(instance=fotografia)
-    
+    # confirmar o metodo recebido e incluir os dados de request no formulario
     if request.method == 'POST':
         form = FotografiaForms(request.POST, request.FILES, instance=fotografia)
+        # verificar se o formulario eh valido
         if form.is_valid():
             form.save()
         messages.success(request, "Fotografia editada com sucesso.")
@@ -71,4 +72,10 @@ def editar_imagem(request, foto_id):
     
 
 def deletar_imagem(request, foto_id):
-    pass
+    # pegar as informacoes da fotografia a editar
+    fotografia = Fotografia.objects.get(id=foto_id)
+    fotografia.delete()
+    messages.success(request, "Fotografia apagada com sucesso.")
+    return redirect('index')
+
+    
