@@ -8,6 +8,13 @@ class FotografiaForms(forms.ModelForm):
         
         # definir os inputs que serao excluidos ou nao visiveis
         exclude = ['publicado',]
+        labels = {
+            'descricao':'Descrição',
+            'data_fotografia':'Data de Registo',
+            'foto':'Fotografia',
+            'nome':'Nome da Fotografia',
+            'usuario':'Utilizador'
+        }
         
          # definir os inputs do formulario
         widgets = {

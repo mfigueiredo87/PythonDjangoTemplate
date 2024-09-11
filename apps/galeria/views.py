@@ -39,11 +39,36 @@ def buscar(request):
 
 # metodos para as imagens
 def nova_imagem(request):
+     # verificar se o user n ta logado e mandar para o login
+    if not request.user.is_authenticated:
+        messages.error(request, "Usuario não logado. Faça Login para ter acesso")
+        return redirect('login')
+    
     form = FotografiaForms
+    if request.method=='POST':
+        form = FotografiaForms(request.POST, request.FILES)
+        # validar o formulario
+        if form.is_valid():
+            form.save()
+        messages.success(request, "Fotografia cadastrada com sucesso.")
+        return redirect('index')
+    
     return render(request, 'galeria/nova_imagem.html', {'form':form})
 
-def editar_imagem(request):
-    pass
+def editar_imagem(request, foto_id):
+    # capturar as informacos do banco
+    fotografia = Fotografia.objects.get(id=foto_id)
+    form = FotografiaForms(instance=fotografia)
+    
+    if request.method == 'POST':
+        form = FotografiaForms(request.POST, request.FILES, instance=fotografia)
+        if form.is_valid():
+            form.save()
+        messages.success(request, "Fotografia editada com sucesso.")
+        return redirect('index')
+    
+    return render(request, 'galeria/editar_imagem.html', {'form': form, 'foto_id':foto_id})
+    
 
-def deletar_imagem(request):
+def deletar_imagem(request, foto_id):
     pass
